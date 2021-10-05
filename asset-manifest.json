@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/en2fa-dictionary/static/css/main.3166aa76.chunk.css",
-    "main.js": "/en2fa-dictionary/static/js/main.1aad7f51.chunk.js",
-    "main.js.map": "/en2fa-dictionary/static/js/main.1aad7f51.chunk.js.map",
+    "main.js": "/en2fa-dictionary/static/js/main.ebaec591.chunk.js",
+    "main.js.map": "/en2fa-dictionary/static/js/main.ebaec591.chunk.js.map",
     "runtime-main.js": "/en2fa-dictionary/static/js/runtime-main.ede87c54.js",
     "runtime-main.js.map": "/en2fa-dictionary/static/js/runtime-main.ede87c54.js.map",
     "static/css/2.c1256375.chunk.css": "/en2fa-dictionary/static/css/2.c1256375.chunk.css",
@@ -15,13 +15,13 @@
     "static/css/main.3166aa76.chunk.css.map": "/en2fa-dictionary/static/css/main.3166aa76.chunk.css.map",
     "static/js/2.2b53e020.chunk.js.LICENSE.txt": "/en2fa-dictionary/static/js/2.2b53e020.chunk.js.LICENSE.txt",
     "static/media/style.scss": "/en2fa-dictionary/static/media/SF-Pro-Text-SemiboldItalic.17737040.otf",
-    "static/media/logo.8c57100b.svg": "/en2fa-dictionary/static/media/logo.8c57100b.svg"
+    "static/media/logoipsum.611858e8.svg": "/en2fa-dictionary/static/media/logoipsum.611858e8.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.ede87c54.js",
     "static/css/2.c1256375.chunk.css",
     "static/js/2.2b53e020.chunk.js",
     "static/css/main.3166aa76.chunk.css",
-    "static/js/main.1aad7f51.chunk.js"
+    "static/js/main.ebaec591.chunk.js"
   ]
 }
