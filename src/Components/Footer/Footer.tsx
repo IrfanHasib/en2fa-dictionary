@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 import { Container, Row, Col } from 'reactstrap';
-import logo from '../../Images/logo.svg';
+import logo from '../../Images/logoipsum.svg';
 
 const Footer: React.FunctionComponent = () => {
   return (

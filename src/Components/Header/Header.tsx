@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 import { Container, Row, Col } from 'reactstrap';
-import Logo from '../../Images/logo.svg';
+import Logo from '../../Images/logoipsum.svg';
 
 const Header: React.FunctionComponent = () => {
   return (
