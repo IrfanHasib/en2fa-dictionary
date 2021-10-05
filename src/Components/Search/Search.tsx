@@ -63,7 +63,7 @@ const Search: React.FunctionComponent = () => {
           <Form className="search-form">
             <FormGroup className="custom-search-box">
               <Input
-                type="tel"
+                type="text"
                 bsSize="lg"
                 placeholder="English or Farsi Word"
                 onChange={changeSearchHandler}
