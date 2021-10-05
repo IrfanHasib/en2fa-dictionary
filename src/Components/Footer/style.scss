@@ -1,0 +1,42 @@
+.footer-section {
+  background: #3f51b5;
+  padding-top: 45px;
+  .footer-logo {
+    display: block;
+    margin-bottom: 20px;
+    img {
+      height: 39px;
+    }
+  }
+  .footer-tagline {
+    color: white;
+    font-family: 'SF Pro Text', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    max-width: 170px;
+  }
+  .footer-menu {
+    list-style-type: none;
+    margin: 39px 0 20px 0;
+    padding: 0;
+    li {
+      a {
+        font-family: 'SF Pro Text', sans-serif;
+        font-weight: 300;
+        font-size: 14px;
+        display: block;
+        text-decoration: none;
+        color: white;
+        padding: 3px 0;
+      }
+    }
+  }
+  .copyright-text {
+    text-align: center;
+    color: white;
+    font-family: 'SF Pro Text', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 20px;
+  }
+}

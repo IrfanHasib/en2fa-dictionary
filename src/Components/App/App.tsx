@@ -1,8 +1,13 @@
 import React from 'react';
-import './App.scss';
+import './style.scss';
+import Home from '../Home/Home';
 
-function App() {
-  return <div className=""></div>;
-}
+const App: React.FunctionComponent = () => {
+  return (
+    <div className="">
+      <Home />
+    </div>
+  );
+};
 
 export default App;
