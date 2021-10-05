@@ -2,6 +2,7 @@ import React from 'react';
 import './style.scss';
 import { Container, Row, Col } from 'reactstrap';
 import logo from '../../Images/logoipsum.svg';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FunctionComponent = () => {
   return (
@@ -17,16 +18,13 @@ const Footer: React.FunctionComponent = () => {
           <Col xs={4} md={3}>
             <ul className="footer-menu">
               <li>
-                <a href="/">About Us</a>
+                <Link to="/about-us">About Us</Link>
               </li>
               <li>
-                <a href="/">Privacy</a>
+                <Link to="/privacy">Privacy</Link>
               </li>
               <li>
-                <a href="/">Terms</a>
-              </li>
-              <li>
-                <a href="/">Terms</a>
+                <Link to="/terms">Terms</Link>
               </li>
             </ul>
           </Col>

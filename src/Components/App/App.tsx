@@ -1,11 +1,11 @@
 import React from 'react';
 import './style.scss';
-import Home from '../Home/Home';
+import Router from '../Router/Router';
 
 const App: React.FunctionComponent = () => {
   return (
     <div className="">
-      <Home />
+      <Router />
     </div>
   );
 };

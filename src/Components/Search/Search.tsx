@@ -25,6 +25,9 @@ const Search: React.FunctionComponent = () => {
           if (word?.English?.toLowerCase()?.trim()?.search(searchText.toLowerCase()?.trim()) === 0) {
             matchFound = true;
           }
+          if (word?.Farsi?.toLowerCase()?.trim()?.search(searchText.toLowerCase()?.trim()) === 0) {
+            matchFound = true;
+          }
           return matchFound;
         })
         ?.slice(0, 10);
@@ -52,46 +55,51 @@ const Search: React.FunctionComponent = () => {
   useEffect(() => {
     getWords();
   }, []);
-  console.log(selectedWord);
   return (
     <>
-      <Container className="mt-5 mb-5">
-        <h1 className="search-title">Search for a Word</h1>
-        <Form className="search-form mt-5">
-          <FormGroup className="custom-search-box">
-            <Input
-              type="tel"
-              bsSize="lg"
-              placeholder="English Word"
-              onChange={changeSearchHandler}
-              innerRef={searchInput}
-              onFocus={() => setInputFocus(true)}
-              //onBlur={() => setInputFocus(false)}
-            />
-            <FontAwesomeIcon icon={faSearch} />
-            {search && search?.length > 0 && hasInputFocus && (
-              <ul className="search-result">
-                {searchResult && searchResult?.length > 0 ? (
-                  searchResult?.map((word: IWord, key: number) => {
-                    return (
-                      <li
-                        key={key}
-                        onClick={() => {
-                          console.log(word);
-                          setSelectedWord(word);
-                          setInputFocus(false);
-                        }}
-                      >
-                        {word.English}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <li className="no_match_found">No match found</li>
-                )}
-              </ul>
-            )}
-          </FormGroup>
+      <div className="hero">
+        <Container className="">
+          <h1 className="search-title">Search for a Word</h1>
+          <Form className="search-form">
+            <FormGroup className="custom-search-box">
+              <Input
+                type="tel"
+                bsSize="lg"
+                placeholder="English or Farsi Word"
+                onChange={changeSearchHandler}
+                innerRef={searchInput}
+                onFocus={() => setInputFocus(true)}
+                //onBlur={() => setInputFocus(false)}
+              />
+              <FontAwesomeIcon icon={faSearch} />
+              {search && search?.length > 0 && hasInputFocus && (
+                <ul className="search-result">
+                  {searchResult && searchResult?.length > 0 ? (
+                    searchResult?.map((word: IWord, key: number) => {
+                      return (
+                        <li
+                          key={key}
+                          onClick={() => {
+                            setSelectedWord(word);
+                            setInputFocus(false);
+                          }}
+                        >
+                          {`${word.English} (${word.Farsi})`}
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li className="no_match_found">No match found</li>
+                  )}
+                </ul>
+              )}
+            </FormGroup>
+          </Form>
+        </Container>
+      </div>
+
+      <Container className="">
+        <div className="result-con">
           {selectedWord ? (
             <div className="selected-result">
               <div className="word-title">{selectedWord.English}</div>
@@ -119,7 +127,7 @@ const Search: React.FunctionComponent = () => {
               <FontAwesomeIcon icon={faSearch} />
             </div>
           )}
-        </Form>
+        </div>
       </Container>
     </>
   );
