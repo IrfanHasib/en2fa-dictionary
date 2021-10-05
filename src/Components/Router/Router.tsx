@@ -8,7 +8,7 @@ import Terms from '../Terms/Terms';
 
 const Router: React.FunctionComponent = () => {
   return (
-    <BrowserRouter basename="/en2fa-dictionary">
+    <BrowserRouter basename="/">
       <Switch>
         <Route path="/about-us">
           <AboutUs />

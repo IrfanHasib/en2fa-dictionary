@@ -102,18 +102,31 @@ const Search: React.FunctionComponent = () => {
         <div className="result-con">
           {selectedWord ? (
             <div className="selected-result">
-              <div className="word-title">{selectedWord.English}</div>
+              <div className="word-title">
+                {selectedWord.English}
+                {selectedWord.English_Audio && (
+                  <span className="audio-icon">
+                    <FontAwesomeIcon
+                      icon={faVolumeUp}
+                      onClick={() => {
+                        const audio = new Audio(`english_audio/${selectedWord?.English_Audio}`);
+                        audio.play().then(() => {});
+                      }}
+                    />
+                  </span>
+                )}
+              </div>
               <div className="meaning-box">
                 <div className="meaning-label">Meaning in Farsi</div>
                 <div className="meaning-title">{selectedWord.Farsi}</div>
                 <div className="meaning-pronunciation">
                   <span>{selectedWord.Transliteration}</span>
-                  {selectedWord.Audio && (
+                  {selectedWord.Farsi_Audio && (
                     <span className="audio-icon">
                       <FontAwesomeIcon
                         icon={faVolumeUp}
                         onClick={() => {
-                          const audio = new Audio(`Audio/${selectedWord.Audio}`);
+                          const audio = new Audio(`farsi_audio/${selectedWord.Farsi_Audio}`);
                           audio.play().then(() => {});
                         }}
                       />

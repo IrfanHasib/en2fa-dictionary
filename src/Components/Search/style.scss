@@ -121,7 +121,7 @@
 
 .selected-no-result {
   text-align: center;
-  padding: 100px 0;
+  padding: 150px 0;
   svg {
     height: 150px !important;
     width: 150px !important;
@@ -133,17 +133,18 @@
 .selected-result {
   color: black;
   padding: 50px 0;
+  min-height: 400px;
   font-family: 'SF Pro Text', sans-serif;
 
   .word-title {
     font-weight: 700;
     font-size: 2em;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .meaning-box {
     background: #f5f6fd;
-    padding: 10px 15px 15px 15px;
+    padding: 15px 20px 20px 20px;
     border-radius: 10px;
 
     .meaning-label {
@@ -158,10 +159,12 @@
     }
 
     .meaning-pronunciation {
-      .audio-icon {
-        cursor: pointer;
-        padding-left: 20px;
-      }
     }
+  }
+  .audio-icon {
+    cursor: pointer;
+    padding-left: 20px;
+    font-size: 16px;
+    vertical-align: middle;
   }
 }
