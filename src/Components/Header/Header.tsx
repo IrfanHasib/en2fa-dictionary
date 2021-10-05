@@ -2,6 +2,7 @@ import React from 'react';
 import './style.scss';
 import { Container, Row, Col } from 'reactstrap';
 import Logo from '../../Images/logoipsum.svg';
+import { Link } from 'react-router-dom';
 
 const Header: React.FunctionComponent = () => {
   return (
@@ -9,9 +10,9 @@ const Header: React.FunctionComponent = () => {
       <header className="site-header">
         <Row className="justify-content-center align-self-center align-items-center">
           <Col className={'site-header-left '}>
-            <a href="/" className="logo">
+            <Link to="/" className="logo">
               <img src={Logo} alt="" />
-            </a>
+            </Link>
           </Col>
           <Col className={'site-header-right'}></Col>
         </Row>

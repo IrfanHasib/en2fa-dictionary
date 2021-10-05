@@ -10,9 +10,9 @@ const Footer: React.FunctionComponent = () => {
       <Container>
         <Row>
           <Col xs={8} md={6}>
-            <a href="/" className="footer-logo">
+            <Link to="/" className="footer-logo">
               <img src={logo} alt="" />
-            </a>
+            </Link>
             <p className="footer-tagline">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
           </Col>
           <Col xs={4} md={3}>
