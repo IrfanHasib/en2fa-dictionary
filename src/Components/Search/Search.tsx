@@ -1,11 +1,10 @@
 import './style.scss';
 import React, { useEffect, useRef, useState } from 'react';
-import { Form, FormGroup, Input, Button, Container, InputGroup, InputGroupText, InputGroupAddon } from 'reactstrap';
+import { Form, FormGroup, Input, Container } from 'reactstrap';
 import { IWord } from './Word.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp';
-import { faLanguage } from '@fortawesome/free-solid-svg-icons/faLanguage';
 
 const Search: React.FunctionComponent = () => {
   const searchInput = useRef<HTMLInputElement>(null);
@@ -106,10 +105,8 @@ const Search: React.FunctionComponent = () => {
                       <FontAwesomeIcon
                         icon={faVolumeUp}
                         onClick={() => {
-                          {
-                            const audio = new Audio(`Audio/${selectedWord.Audio}`);
-                            audio.play().then(() => {});
-                          }
+                          const audio = new Audio(`Audio/${selectedWord.Audio}`);
+                          audio.play().then(() => {});
                         }}
                       />
                     </span>

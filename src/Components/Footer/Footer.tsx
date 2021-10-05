@@ -17,29 +17,29 @@ const Footer: React.FunctionComponent = () => {
           <Col xs={4} md={3}>
             <ul className="footer-menu">
               <li>
-                <a href="#">About Us</a>
+                <a href="/">About Us</a>
               </li>
               <li>
-                <a href="#">Privacy</a>
+                <a href="/">Privacy</a>
               </li>
               <li>
-                <a href="#">Terms</a>
+                <a href="/">Terms</a>
               </li>
               <li>
-                <a href="#">Terms</a>
+                <a href="/">Terms</a>
               </li>
             </ul>
           </Col>
           <Col xs={12} md={3}>
             <ul className="footer-menu">
               <li>
-                <a href="#">Instagram</a>
+                <a href="/">Instagram</a>
               </li>
               <li>
-                <a href="#">Linkedin</a>
+                <a href="/">Linkedin</a>
               </li>
               <li>
-                <a href="#">Email</a>
+                <a href="/">Email</a>
               </li>
             </ul>
           </Col>
