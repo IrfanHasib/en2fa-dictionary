@@ -13,8 +13,9 @@
   background-size: cover;
   background-position: 50%;
   background-repeat: no-repeat;
-  background-image: url(https://d1q4kshf6f0axi.cloudfront.net/hubpage/hero-images-2/hero_2_320_1x.webp);
+  background-image: url('../../Images/bg_image.jpg');
 
+  /*
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     background-image: url(https://d1q4kshf6f0axi.cloudfront.net/hubpage/hero-images-2/hero_2_320_2x.webp);
   }
@@ -57,6 +58,7 @@
   @media (-webkit-min-device-pixel-ratio: 2) and (min-width: 1280px), (min-resolution: 192dpi) and (min-width: 1280px) {
     background-image: url(https://d1q4kshf6f0axi.cloudfront.net/hubpage/hero-images-2/hero_2_1440_2x.webp);
   }
+ */
 }
 
 .search-form {
