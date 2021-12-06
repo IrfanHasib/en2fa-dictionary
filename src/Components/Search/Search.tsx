@@ -59,13 +59,13 @@ const Search: React.FunctionComponent = () => {
     <>
       <div className="hero">
         <Container className="">
-          <h1 className="search-title">Search for a Word</h1>
+          <h1 className="search-title"></h1>
           <Form className="search-form">
             <FormGroup className="custom-search-box">
               <Input
                 type="text"
                 bsSize="lg"
-                placeholder="English or Farsi Word"
+                placeholder="Type English or Farsi Word"
                 onChange={changeSearchHandler}
                 innerRef={searchInput}
                 onFocus={() => setInputFocus(true)}

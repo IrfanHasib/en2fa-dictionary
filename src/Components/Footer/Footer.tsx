@@ -13,7 +13,9 @@ const Footer: React.FunctionComponent = () => {
             <Link to="/" className="footer-logo">
               <img src={logo} alt="" />
             </Link>
-            <p className="footer-tagline">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p className="footer-tagline">
+              FarsiDict is a langugage dictionary for farsi and english audio translation
+            </p>
           </Col>
           <Col xs={4} md={3}>
             <ul className="footer-menu">
