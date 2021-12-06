@@ -5,6 +5,7 @@ import Home from '../Home/Home';
 import AboutUs from '../AboutUs/AboutUs';
 import Privacy from '../Privacy/Privacy';
 import Terms from '../Terms/Terms';
+import CategoryCardItem from '../CategoryCardItem/CategoryCardItem';
 
 const Router: React.FunctionComponent = () => {
   return (
@@ -18,6 +19,9 @@ const Router: React.FunctionComponent = () => {
         </Route>
         <Route path="/terms">
           <Terms />
+        </Route>
+        <Route path="/category/:categoryName">
+          <CategoryCardItem />
         </Route>
         <Route path="/">
           <Home />
