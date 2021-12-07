@@ -89,7 +89,7 @@ const CategoryCardItem: React.FunctionComponent = () => {
                           <td>{word?.Farsi}</td>
                           <td>
                             {word.Farsi_Audio && (
-                              <span className="audio-icon">
+                              <span className="audio-icon-2">
                                 <FontAwesomeIcon
                                   icon={faVolumeUp}
                                   onClick={() => {

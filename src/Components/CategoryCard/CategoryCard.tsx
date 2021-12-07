@@ -28,15 +28,21 @@ const CategoryCard: React.FunctionComponent = () => {
     getCategories();
   }, []);
   return (
-    <Container>
+    <Container style={!categories ? { minHeight: 250 } : {}}>
       <h4 className="mt-5 mb-4">Learn words by topics</h4>
       <Row className="mb-5 justify-content-center">
         {categories &&
           categories?.map((category, key) => {
             return (
               <Col sm={3} xs={6} key={key} className="mb-4">
-                <Link className="catCard" to={'/category/' + category?.card_name}>
-                  {category?.card_name}
+                <Link
+                  style={{
+                    backgroundImage: 'url("/category-image/' + category?.image + '")',
+                  }}
+                  className="catCard"
+                  to={'/category/' + category?.card_name}
+                >
+                  <span>{category?.card_name}</span>
                 </Link>
               </Col>
             );
