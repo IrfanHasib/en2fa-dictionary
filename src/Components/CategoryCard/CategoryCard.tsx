@@ -29,7 +29,7 @@ const CategoryCard: React.FunctionComponent = () => {
   }, []);
   return (
     <Container style={!categories ? { minHeight: 250 } : {}}>
-      <h4 className="mt-5 mb-4">Learn words by topics</h4>
+      <h4 className="mt-5 mb-4 text-center">Learn words by topics</h4>
       <Row className="mb-5 justify-content-center">
         {categories &&
           categories?.map((category, key) => {
