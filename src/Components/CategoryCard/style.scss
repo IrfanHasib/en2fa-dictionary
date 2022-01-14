@@ -1,25 +1,31 @@
 .catCard {
   text-align: center;
   display: block;
-
-  border-radius: 5px;
   color: black;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'SF Pro Display', sans-serif;
   text-decoration: none;
-  background-size: cover;
-  background-position: center center;
   span {
     text-align: center;
     display: block;
-    padding: 50px 0;
-    background: rgba(255, 255, 255, 0.75);
+    margin-top: 10px;
+  }
+  img {
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    transition: 0.25s all;
+    position: relative;
+    top: 0;
   }
   &:hover {
     text-decoration: none;
     span {
       color: black;
-      background: rgba(255, 255, 255, 0.85);
+    }
+    img {
+      top: -7px;
     }
   }
 }
