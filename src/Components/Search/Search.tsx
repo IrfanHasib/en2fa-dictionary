@@ -7,12 +7,36 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 
 const Search: React.FunctionComponent = () => {
+  const boxDiv = useRef<HTMLDivElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
-  const [hasInputFocus, setInputFocus] = useState<boolean>(false);
   const [search, setSearch] = useState<string | null>();
   const [words, setWords] = useState<IWord[]>();
   const [selectedWord, setSelectedWord] = useState<IWord>();
   const [searchResult, setSearchResults] = useState<IWord[] | undefined>();
+  const [isComponentVisible, setIsComponentVisible] = useState(true);
+
+  const handleHideDropdown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setIsComponentVisible(false);
+    }
+  };
+
+  const handleClickOutside = (event: Event) => {
+    //@ts-ignore
+    if (boxDiv.current && event.target && !boxDiv.current.contains(event.target)) {
+      setIsComponentVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleHideDropdown, true);
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('keydown', handleHideDropdown, true);
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  });
+
   const changeSearchHandler = () => {
     const searchText = searchInput?.current?.value;
     setSearch(searchText);
@@ -59,42 +83,42 @@ const Search: React.FunctionComponent = () => {
     <>
       <div className="hero">
         <Container className="">
-          <h1 className="search-title"></h1>
-          <Form className="search-form">
-            <FormGroup className="custom-search-box">
-              <Input
-                type="text"
-                bsSize="lg"
-                placeholder="Type English or Farsi Word"
-                onChange={changeSearchHandler}
-                innerRef={searchInput}
-                onFocus={() => setInputFocus(true)}
-                //onBlur={() => setInputFocus(false)}
-              />
-              <FontAwesomeIcon icon={faSearch} />
-              {search && search?.length > 0 && hasInputFocus && (
-                <ul className="search-result">
-                  {searchResult && searchResult?.length > 0 ? (
-                    searchResult?.map((word: IWord, key: number) => {
-                      return (
-                        <li
-                          key={key}
-                          onClick={() => {
-                            setSelectedWord(word);
-                            setInputFocus(false);
-                          }}
-                        >
-                          {`${word.English} (${word.Farsi})`}
-                        </li>
-                      );
-                    })
-                  ) : (
-                    <li className="no_match_found">No match found</li>
-                  )}
-                </ul>
-              )}
-            </FormGroup>
-          </Form>
+          <div ref={boxDiv}>
+            <Form className="search-form">
+              <FormGroup className="custom-search-box">
+                <Input
+                  type="text"
+                  bsSize="lg"
+                  placeholder="Type English or Farsi Word"
+                  onChange={changeSearchHandler}
+                  innerRef={searchInput}
+                  onFocus={() => setIsComponentVisible(true)}
+                />
+                <FontAwesomeIcon icon={faSearch} />
+                {search && search?.length > 0 && isComponentVisible && (
+                  <ul className="search-result">
+                    {searchResult && searchResult?.length > 0 ? (
+                      searchResult?.map((word: IWord, key: number) => {
+                        return (
+                          <li
+                            key={key}
+                            onClick={() => {
+                              setSelectedWord(word);
+                              setIsComponentVisible(false);
+                            }}
+                          >
+                            {`${word.English} (${word.Farsi})`}
+                          </li>
+                        );
+                      })
+                    ) : (
+                      <li className="no_match_found">No match found</li>
+                    )}
+                  </ul>
+                )}
+              </FormGroup>
+            </Form>
+          </div>
         </Container>
       </div>
 
