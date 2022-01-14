@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
-import { Container, Row, Col, Card, CardBody, CardTitle, CardLink, Table } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 import { ICategory } from './Category.types';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -68,7 +68,6 @@ const CategoryCardItem: React.FunctionComponent = () => {
               Back to Home
             </Link>
           </h1>
-
           <div className="common-page-body">
             <Table className="">
               <thead>

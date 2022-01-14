@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
-import { Container, Row, Col, Card, CardBody, CardTitle, CardLink } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { ICategory } from './Category.types';
 import { Link } from 'react-router-dom';
 

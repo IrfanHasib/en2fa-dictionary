@@ -1,6 +1,6 @@
 import './style.scss';
 import React, { useEffect, useRef, useState } from 'react';
-import { Form, FormGroup, Input, Container } from 'reactstrap';
+import { FormGroup, Input, Container } from 'reactstrap';
 import classNames from 'classnames';
 import { IWord } from './Word.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
