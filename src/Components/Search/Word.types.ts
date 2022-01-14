@@ -6,4 +6,28 @@ interface IWord {
   English_Audio: string;
 }
 
-export type { IWord };
+interface EN2FA {
+  POS: string;
+  English: string;
+  Lang: string;
+  EnglishMeaning: string;
+  EnglishPronunciation: string;
+  EnglishSentence: string;
+  EnglishSentenceTranslate: string;
+  EnglishAudio: string;
+  LangAudio: string;
+}
+
+interface FA2EN {
+  POS: string;
+  Lang: string;
+  English: string;
+  LangMeaning: string;
+  LangPronunciation: string;
+  LangSentence: string;
+  LangSentenceTranslate: string;
+  LangAudio: string;
+  EnglishAudio: string;
+}
+
+export type { IWord, EN2FA, FA2EN };
