@@ -1,10 +1,41 @@
 import './style.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import { Form, FormGroup, Input, Container } from 'reactstrap';
+import classNames from 'classnames';
 import { IWord } from './Word.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp';
+
+const useKeyPress = function (targetKey: 'ArrowDown' | 'ArrowUp' | 'Enter') {
+  const [keyPressed, setKeyPressed] = useState(false);
+
+  // @ts-ignore
+  function downHandler({ key }) {
+    if (key === targetKey) {
+      setKeyPressed(true);
+    }
+  }
+
+  // @ts-ignore
+  const upHandler = ({ key }) => {
+    if (key === targetKey) {
+      setKeyPressed(false);
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('keydown', downHandler);
+    window.addEventListener('keyup', upHandler);
+
+    return () => {
+      window.removeEventListener('keydown', downHandler);
+      window.removeEventListener('keyup', upHandler);
+    };
+  });
+
+  return keyPressed;
+};
 
 const Search: React.FunctionComponent = () => {
   const boxDiv = useRef<HTMLDivElement>(null);
@@ -13,7 +44,11 @@ const Search: React.FunctionComponent = () => {
   const [words, setWords] = useState<IWord[]>();
   const [selectedWord, setSelectedWord] = useState<IWord>();
   const [searchResult, setSearchResults] = useState<IWord[] | undefined>();
-  const [isComponentVisible, setIsComponentVisible] = useState(true);
+  const [isComponentVisible, setIsComponentVisible] = useState<boolean>(true);
+  const [cursor, setCursor] = useState<number>(0);
+  const downPress = useKeyPress('ArrowDown');
+  const upPress = useKeyPress('ArrowUp');
+  const enterPress = useKeyPress('Enter');
 
   const handleHideDropdown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -38,6 +73,8 @@ const Search: React.FunctionComponent = () => {
   });
 
   const changeSearchHandler = () => {
+    setCursor(0);
+    setIsComponentVisible(true);
     const searchText = searchInput?.current?.value;
     setSearch(searchText);
     let results: IWord[] | undefined;
@@ -79,45 +116,67 @@ const Search: React.FunctionComponent = () => {
   useEffect(() => {
     getWords();
   }, []);
+
+  useEffect(() => {
+    if (searchResult?.length && downPress) {
+      setCursor((prevState) => (prevState < searchResult?.length - 1 ? prevState + 1 : prevState));
+    }
+  }, [downPress]);
+  useEffect(() => {
+    if (searchResult?.length && upPress) {
+      setCursor((prevState) => (prevState > 0 ? prevState - 1 : prevState));
+    }
+  }, [upPress]);
+  useEffect(() => {
+    if (searchResult?.length && enterPress) {
+      setSelectedWord(searchResult?.[cursor]);
+      setIsComponentVisible(false);
+    }
+  }, [cursor, enterPress]);
+
   return (
     <>
       <div className="hero">
         <Container className="">
-          <div ref={boxDiv}>
-            <Form className="search-form">
-              <FormGroup className="custom-search-box">
-                <Input
-                  type="text"
-                  bsSize="lg"
-                  placeholder="Type English or Farsi Word"
-                  onChange={changeSearchHandler}
-                  innerRef={searchInput}
-                  onFocus={() => setIsComponentVisible(true)}
-                />
-                <FontAwesomeIcon icon={faSearch} />
-                {search && search?.length > 0 && isComponentVisible && (
-                  <ul className="search-result">
-                    {searchResult && searchResult?.length > 0 ? (
-                      searchResult?.map((word: IWord, key: number) => {
-                        return (
-                          <li
-                            key={key}
-                            onClick={() => {
-                              setSelectedWord(word);
-                              setIsComponentVisible(false);
-                            }}
-                          >
-                            {`${word.English} (${word.Farsi})`}
-                          </li>
-                        );
-                      })
-                    ) : (
-                      <li className="no_match_found">No match found</li>
-                    )}
-                  </ul>
-                )}
-              </FormGroup>
-            </Form>
+          <div className="search-form" ref={boxDiv}>
+            <FormGroup className="custom-search-box">
+              <Input
+                type="text"
+                bsSize="lg"
+                placeholder="Type English or Farsi Word"
+                onChange={changeSearchHandler}
+                innerRef={searchInput}
+                onFocus={() => setIsComponentVisible(true)}
+              />
+              <FontAwesomeIcon icon={faSearch} />
+              {search && search?.length > 0 && isComponentVisible && (
+                <ul className="search-result">
+                  {searchResult && searchResult?.length > 0 ? (
+                    searchResult?.map((word: IWord, key: number) => {
+                      return (
+                        <li
+                          key={key}
+                          onClick={() => {
+                            setSelectedWord(word);
+                            setIsComponentVisible(false);
+                          }}
+                          className={classNames({
+                            hover: key === cursor,
+                          })}
+                          onMouseEnter={() => {
+                            setCursor(key);
+                          }}
+                        >
+                          {`${word.English} (${word.Farsi})`}
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li className="no_match_found">No match found</li>
+                  )}
+                </ul>
+              )}
+            </FormGroup>
           </div>
         </Container>
       </div>
