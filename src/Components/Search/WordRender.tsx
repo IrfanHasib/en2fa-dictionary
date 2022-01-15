@@ -59,8 +59,8 @@ const WordRender: React.FunctionComponent<IWordRender> = ({ words, lang }: IWord
               {groupByPOSMeaning[pos] &&
                 Object.keys(groupByPOSMeaning[pos])?.map(
                   (pos_meaning: string, key3: number): JSX.Element => (
-                    <div key={key3}>
-                      <div>
+                    <div key={key3} className="pos-con">
+                      <div className="pos-meaning">
                         {++wordNumber}. ({pos_meaning})
                       </div>
                       <ol type="a">
