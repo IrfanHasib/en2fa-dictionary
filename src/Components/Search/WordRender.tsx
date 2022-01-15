@@ -9,11 +9,9 @@ interface IWordRender {
 }
 
 const WordRender: React.FunctionComponent<IWordRender> = ({ words, lang }: IWordRender): JSX.Element => {
-  console.log(lang, words);
   const [groupByPOSMeaning, setGroupByPOSMeaning] = useState<any>();
   const [wordTitle, setWordTitle] = useState<string>();
   const [wordAudio, setWordAudio] = useState<string>();
-
   useEffect(() => {
     if (lang === 'en') {
       setWordTitle((words as IEN2FA[])?.[0]?.English);
@@ -22,7 +20,6 @@ const WordRender: React.FunctionComponent<IWordRender> = ({ words, lang }: IWord
       setWordTitle((words as IFA2EN[])?.[0]?.Lang);
       setWordAudio((words as IFA2EN[])?.[0]?.LangAudio);
     }
-
     setGroupByPOSMeaning(
       words.reduce(function (r, a) {
         r[a.POS] = r[a.POS] || [];
@@ -33,12 +30,10 @@ const WordRender: React.FunctionComponent<IWordRender> = ({ words, lang }: IWord
           r[a.POS][(a as IFA2EN)?.LangMeaning] = r[a.POS][(a as IFA2EN)?.LangMeaning] || [];
           r[a.POS][(a as IFA2EN)?.LangMeaning].push(a);
         }
-        console.log(r);
         return r;
       }, Object.create(null))
     );
   }, [words, lang]);
-  console.log(groupByPOSMeaning);
   let wordNumber = 0;
   return (
     <div className="selected-result">
