@@ -100,7 +100,8 @@ const WordRender: React.FunctionComponent<IWordRender> = ({ words, lang }: IWord
                                 )}
                               </div>
                               <div className="meaning-pronunciation">
-                                <span>{sentence}</span> -<span>{sentenceTranslate}</span>
+                                <span className="sentence">{sentence}</span> -{' '}
+                                <span className="sentenceTranslate">{sentenceTranslate}</span>
                               </div>
                             </li>
                           );

@@ -155,8 +155,9 @@
     }
 
     .meaning-title {
-      font-size: 1.5em;
-      margin-bottom: 5px;
+      font-size: 1em;
+      margin: 5px 0;
+      color: #e53935;
     }
     .pos-con {
       .pos-meaning {
@@ -168,6 +169,12 @@
       }
     }
     .meaning-pronunciation {
+      font-size: 0.85em;
+      .sentence {
+      }
+      .sentenceTranslate {
+        color: #616161;
+      }
     }
   }
   .audio-icon {
@@ -175,5 +182,6 @@
     padding-left: 20px;
     font-size: 20px;
     vertical-align: middle;
+    color: black;
   }
 }
