@@ -6,7 +6,7 @@ interface IWord {
   English_Audio: string;
 }
 
-interface EN2FA {
+interface IEN2FA {
   POS: string;
   English: string;
   Lang: string;
@@ -18,7 +18,7 @@ interface EN2FA {
   LangAudio: string;
 }
 
-interface FA2EN {
+interface IFA2EN {
   POS: string;
   Lang: string;
   English: string;
@@ -30,4 +30,4 @@ interface FA2EN {
   EnglishAudio: string;
 }
 
-export type { IWord, EN2FA, FA2EN };
+export type { IWord, IEN2FA, IFA2EN };

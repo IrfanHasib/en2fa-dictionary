@@ -2,10 +2,10 @@ import './style.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import { FormGroup, Input, Container } from 'reactstrap';
 import classNames from 'classnames';
-import { IWord } from './Word.types';
+import { IEN2FA, IFA2EN } from './Word.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
-import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp';
+import WordRender from './WordRender';
 
 const useKeyPress = function (targetKey: 'ArrowDown' | 'ArrowUp' | 'Enter') {
   const [keyPressed, setKeyPressed] = useState(false);
@@ -37,13 +37,17 @@ const useKeyPress = function (targetKey: 'ArrowDown' | 'ArrowUp' | 'Enter') {
   return keyPressed;
 };
 
-const Search: React.FunctionComponent = () => {
+const Search: React.FunctionComponent = (): JSX.Element => {
   const boxDiv = useRef<HTMLDivElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState<string | null>();
-  const [words, setWords] = useState<IWord[]>();
-  const [selectedWord, setSelectedWord] = useState<IWord>();
-  const [searchResult, setSearchResults] = useState<IWord[] | undefined>();
+  const [en2faWords, setEn2faWords] = useState<IEN2FA[]>();
+  const [en2faOnlyWords, setEn2faOnlyWords] = useState<string[]>();
+  const [fa2enWords, setFa2enWords] = useState<IFA2EN[]>();
+  const [fa2enOnlyWords, setFa2enOnlyWords] = useState<string[]>();
+  const [en2faResultSelected, setEn2faResultSelected] = useState<IEN2FA[]>();
+  const [fa2enResultSelected, setFa2enResultSelected] = useState<IFA2EN[]>();
+  const [searchResult, setSearchResults] = useState<string[] | undefined>();
   const [isComponentVisible, setIsComponentVisible] = useState<boolean>(true);
   const [cursor, setCursor] = useState<number>(0);
   const downPress = useKeyPress('ArrowDown');
@@ -77,42 +81,65 @@ const Search: React.FunctionComponent = () => {
     setIsComponentVisible(true);
     const searchText = searchInput?.current?.value;
     setSearch(searchText);
-    let results: IWord[] | undefined;
+    let results: string[] | undefined;
     if (searchText) {
-      results = words
-        ?.sort((a: IWord, b: IWord): number => a.English.localeCompare(b.English))
-        ?.filter((word: IWord): boolean => {
-          let matchFound: boolean = false;
-          if (word?.English?.toLowerCase()?.trim()?.search(searchText.toLowerCase()?.trim()) === 0) {
-            matchFound = true;
-          }
-          if (word?.Farsi?.toLowerCase()?.trim()?.search(searchText.toLowerCase()?.trim()) === 0) {
-            matchFound = true;
-          }
-          return matchFound;
-        })
+      results = en2faOnlyWords
+        ?.filter((word: string): boolean => word?.toLowerCase()?.search(searchText.toLowerCase()?.trim()) === 0)
         ?.slice(0, 10);
+      if (!results || results?.length === 0) {
+        results = fa2enOnlyWords
+          ?.filter((word: string): boolean => word?.toLowerCase()?.search(searchText.toLowerCase()?.trim()) === 0)
+          ?.slice(0, 10);
+      }
     }
     setSearchResults(results);
   };
+
   const getWords = () => {
-    const dataUrl = 'data/words.json';
-    fetch(dataUrl, {
+    fetch('data/en2fa.json', {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
     })
-      .then((response: Response): Promise<IWord[]> => {
+      .then((response: Response): Promise<IEN2FA[]> => {
         return response.json();
       })
-      .then((data: IWord[]) => {
-        setWords(data);
+      .then((data: IEN2FA[]) => {
+        setEn2faWords(data);
+        setEn2faOnlyWords(
+          data
+            ?.map((en2faWord): string => en2faWord?.English?.trim())
+            ?.filter((word: string, index, self): boolean => word?.length > 0 && self.indexOf(word) === index)
+            ?.sort((a: string, b: string): number => a?.localeCompare(b))
+        );
+      })
+      .catch((e: Error) => {
+        console.error(e);
+      });
+    fetch('data/fa2en.json', {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then((response: Response): Promise<IFA2EN[]> => {
+        return response.json();
+      })
+      .then((data: IFA2EN[]) => {
+        setFa2enWords(data);
+        setFa2enOnlyWords(
+          data
+            ?.map((fa2enWord): string => fa2enWord?.Lang?.trim())
+            ?.filter((word: string, index, self): boolean => word?.length > 0 && self.indexOf(word) === index)
+            ?.sort((a: string, b: string): number => a?.localeCompare(b))
+        );
       })
       .catch((e: Error) => {
         console.error(e);
       });
   };
+
   useEffect(() => {
     getWords();
   }, []);
@@ -122,18 +149,29 @@ const Search: React.FunctionComponent = () => {
       setCursor((prevState) => (prevState < searchResult?.length - 1 ? prevState + 1 : prevState));
     }
   }, [downPress]);
+
   useEffect(() => {
     if (searchResult?.length && upPress) {
       setCursor((prevState) => (prevState > 0 ? prevState - 1 : prevState));
     }
   }, [upPress]);
+
   useEffect(() => {
     if (searchResult?.length && enterPress) {
-      setSelectedWord(searchResult?.[cursor]);
+      buildSelectedResult(searchResult?.[cursor]);
       setIsComponentVisible(false);
     }
   }, [cursor, enterPress]);
 
+  function buildSelectedResult(word: string) {
+    if (en2faOnlyWords?.includes(word)) {
+      setFa2enResultSelected(undefined);
+      setEn2faResultSelected(en2faWords?.filter((en2faWord): boolean => en2faWord?.English?.trim() === word));
+    } else if (fa2enOnlyWords?.includes(word)) {
+      setEn2faResultSelected(undefined);
+      setFa2enResultSelected(fa2enWords?.filter((fa2enWord): boolean => fa2enWord?.Lang?.trim() === word));
+    }
+  }
   return (
     <>
       <div className="hero">
@@ -152,12 +190,12 @@ const Search: React.FunctionComponent = () => {
               {search && search?.length > 0 && isComponentVisible && (
                 <ul className="search-result">
                   {searchResult && searchResult?.length > 0 ? (
-                    searchResult?.map((word: IWord, key: number) => {
+                    searchResult?.map((word: string, key: number) => {
                       return (
                         <li
                           key={key}
                           onClick={() => {
-                            setSelectedWord(word);
+                            buildSelectedResult(word);
                             setIsComponentVisible(false);
                           }}
                           className={classNames({
@@ -167,7 +205,7 @@ const Search: React.FunctionComponent = () => {
                             setCursor(key);
                           }}
                         >
-                          {`${word.English} (${word.Farsi})`}
+                          {word}
                         </li>
                       );
                     })
@@ -183,41 +221,11 @@ const Search: React.FunctionComponent = () => {
 
       <Container className="">
         <div className="result-con">
-          {selectedWord ? (
-            <div className="selected-result">
-              <div className="word-title">
-                {selectedWord.English}
-                {selectedWord.English_Audio && (
-                  <span className="audio-icon">
-                    <FontAwesomeIcon
-                      icon={faVolumeUp}
-                      onClick={() => {
-                        const audio = new Audio(`english_audio/${selectedWord?.English_Audio}`);
-                        audio.play().then(() => {});
-                      }}
-                    />
-                  </span>
-                )}
-              </div>
-              <div className="meaning-box">
-                <div className="meaning-label">Meaning in Farsi</div>
-                <div className="meaning-title">{selectedWord.Farsi}</div>
-                <div className="meaning-pronunciation">
-                  <span>{selectedWord.Transliteration}</span>
-                  {selectedWord.Farsi_Audio && (
-                    <span className="audio-icon">
-                      <FontAwesomeIcon
-                        icon={faVolumeUp}
-                        onClick={() => {
-                          const audio = new Audio(`farsi_audio/${selectedWord.Farsi_Audio}`);
-                          audio.play().then(() => {});
-                        }}
-                      />
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
+          {en2faResultSelected || fa2enResultSelected ? (
+            <>
+              {en2faResultSelected && <WordRender words={en2faResultSelected} lang="en" />}
+              {fa2enResultSelected && <WordRender words={fa2enResultSelected} lang="fa" />}
+            </>
           ) : (
             <div className="selected-no-result">
               <FontAwesomeIcon icon={faSearch} />
